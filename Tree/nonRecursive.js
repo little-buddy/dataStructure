@@ -1,19 +1,25 @@
 // @flow
-const title = `非递归 ${树} 遍历算法`
+const title = "非递归 ${树} 遍历算法"
 
+const {createDCTree:createTree}= require("./tree")
 // TODO: 一切都是以 根结点 作为 驱动点的
 // TODO: 遍历可以统一成一个函数，他们初始化是一致的
 
 // 前序
-function preOreder(root:myNode){
-  let bt: myNode|null = root
-  const stack:Array<myNode> = []
-  let top:number = -1
-  while(bt!==null&&top!==-1){
-    while(bt!==null){
+const root1 = createTree()
+function preOrder(tree){
+  if(!tree){
+    return
+  }
+  let bt = tree
+  const stack = []
+  let top = -1
+  while(bt||top!==-1){
+    while(bt){
       console.log(bt.data)
-      bt = bt.lchild
       stack[++top] = bt
+      bt = bt.lchild
+      
     }
     if(top!==-1){
       bt=stack[top--]
@@ -21,14 +27,18 @@ function preOreder(root:myNode){
     }
   }
 }
-
+// console.log(preOrder(root1))
 // 中序
-function inOrder(root:myNode){
-  let bt:myNode|null = root
-  const stack:Array<myNode> = []
-  let top:number = -1
-  while(bt!==null&&top!==-1){
-    while(bt!==null){
+const root2 = createTree()
+function inOrder(tree){
+  if(!tree){
+    return
+  }
+  let bt = tree
+  const stack = []
+  let top = -1
+  while(bt||top!==-1){
+    while(bt){
       stack[++top] = bt
       bt = bt.lchild
     }
@@ -39,30 +49,43 @@ function inOrder(root:myNode){
     }
   }
 }
+// console.log(inOrder(root2))
 
 // 后序
 
 // 这里就涉及到一个点，就是参数的校验现在是全留给 flow吗？好像也没有内部输入啊，是不是意味着可以少些一些参数校验了
-function postOrder(root:myNode){
-  // 不写 好像就是 var
-  let bt:myNode|null = root
-  // JS 中数组是不安全的，所以访问的时候又必须要写成 type|void 的形式
-  // type[] Array<type>
-  const stack:Array<myNode> = []
-  let top:number = -1
-  const flag = []
-  while(bt!==null&&top!=-1){
-    while(bt!==null){
+
+// 不写 好像就是 var
+// JS 中数组是不安全的，所以访问的时候又必须要写成 type|void 的形式
+// type[] Array<type>
+  
+
+const root3 = createTree()
+function postOrder(tree) {
+  if (!tree) {
+    return
+  }
+  const stack = []
+  let top = -1
+  let bt = tree
+  while (bt || top != -1) {
+    while (bt) {
+      bt.flag = 0
       stack[++top] = bt
       bt = bt.lchild
     }
-    if(top!=-1){
-      if(flag[top]){
-        bt=stack[top--]
-        console.log(bt.data)
+    while (top != -1 && stack[top].flag) {
+      bt = stack[top--]
+      console.log(bt.data)
+      if (bt === tree) {
+        bt = ''
       }
-      bt = stack[top].rchild
-      flag[top] = true
+    }
+    if (top != -1) {
+      bt = stack[top]
+      bt.flag = 1
+      bt = bt.rchild
     }
   }
 }
+// console.log(postOrder(root3))

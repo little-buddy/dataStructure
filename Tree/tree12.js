@@ -33,29 +33,31 @@ const title = "以孩子兄弟表示法做存储结构，求 ${ 树 } 中结点X
 // 这题的前提一定是树已经存在了，参数就是 【 结点 + i 孩子 】
 
 
-type Node ={
-  data:any,
-  child:Node,
-  brother:Node
-}
-
-
 // 对于左右孩子的树来说，递归算法可以解决问题
 // 对于非左右孩子表示的树，就需要用到非递归遍历方法
 
 // 我们需要遍历的是兄弟孩子结点表示法
-function findSet(root:Node,value:number){
+
+const {createBCTree} = require('./tree')
+const tree = createBCTree()
+
+
+function findSet(root,value){
   const result = []
+  if (!root) {
+    return result
+  }
   const stack = []
   let bt = root
   let top = -1
-  while(bt&&top!=-1){
+  while(bt||top!=-1){
     while(bt){
       if(bt.data == value){
         result.push(bt)
       }
+      stack[++top] = bt
       bt = bt.brother
-      stack[++top]=bt
+      
     }
     if(top!=-1){
       bt=stack[top--]
@@ -65,29 +67,32 @@ function findSet(root:Node,value:number){
   return result
 }
 
-function findI(node:Node,size:number){
+function findI(node,size){
   if(!node){
     return;
   }
   let _node = node.child
-  let i=0
-  for(;i<size;i++){
+  let i=1
+  for(;i<=size;i++){
     if(i==size||!_node){
       break;
     }
     _node=_node.borther
   }
-  if(i==size&&!_node){
-    console.log(_node,`find no.${size} child`)
+  if(i==size&&_node){
+    console.log(node,`find no.${size} child：`,_node)
   }
 }
 
 // traverse
 // 对于一个 tree 来说，我们要选择一种遍历方式
-function getChild(node:Node,value:number,size:number){
+function getChild(node,value,size){
   const validNode = findSet(node,value)
   validNode.forEach((node,index)=>{
     findI(node,size)
   })
 }
+
+getChild(tree,'D',1)
+
 // FIXME: I support the flow. I think flow is beautiful.
