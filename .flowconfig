@@ -1,12 +1,24 @@
 [ignore]
+#<PROJECT_ROOT>/node_modules/.*
+.*/node_modules/.*
 
 [include]
+# It can contain with parentPath of root
+# ../<PROJECT_ROOT>/xxx
 
 [libs]
+# By default,flow-typed(folder of name) will be included
 flow
 
 [lints]
 
 [options]
-
+# all DEFAULT[false].           If true,not just those with @flow
+# emoji DEFAULT[false].         If true,when flow check,will have emoji
+# esproposal.decorators DEFAULT[ignore] enume[ignore|warn]  early-stage
+# log.file                      path of file
+      
+# the flow use  OCaml regular expressions. start by \\(  end by \\) or by \\| group can use by \\1 - \\9
+# suppress_comment(regex) 
+# module.name_mapper = '' -> '' , mapping require(alias) -> require(name)
 [strict]
