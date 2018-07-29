@@ -32,13 +32,13 @@ const title = "以孩子兄弟表示法做存储结构，求 ${ 树 } 中结点X
 // 所以对于一般情况，我们不会拿一个空值和空数组作为返回，而是直接一个 undefined的值不然，这个题没法做了
 // 这题的前提一定是树已经存在了，参数就是 【 结点 + i 孩子 】
 
-/*
+
 type Node ={
   data:any,
-  child:any,
-  brother:any
+  child:Node,
+  brother:Node
 }
-*/
+
 
 // 对于左右孩子的树来说，递归算法可以解决问题
 // 对于非左右孩子表示的树，就需要用到非递归遍历方法
@@ -69,7 +69,7 @@ function findI(node:Node,size:number){
   if(!node){
     return;
   }
-  const _node = node.child
+  let _node = node.child
   let i=0
   for(;i<size;i++){
     if(i==size||!_node){
@@ -85,7 +85,7 @@ function findI(node:Node,size:number){
 // traverse
 // 对于一个 tree 来说，我们要选择一种遍历方式
 function getChild(node:Node,value:number,size:number){
-  const validNode = findSet(Node,value)
+  const validNode = findSet(node,value)
   validNode.forEach((node,index)=>{
     findI(node,size)
   })
