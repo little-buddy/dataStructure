@@ -48,8 +48,23 @@ const createBCTree = function(){
     }
 }
 
+function createLeafNode(arr){
+  const set = []
+  arr.forEach((item,index)=>{
+    if(!Number.isNaN(item)){
+      set.push({
+        data:item,
+        rchild:null,
+        lchild:null
+      })
+    }
+  })
+  return set
+}
+
 
 module.exports = {
   createDCTree, // double child
-  createBCTree  // parent child 
+  createBCTree,  // parent child 
+  createLeafNode,
 }
