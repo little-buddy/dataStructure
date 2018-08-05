@@ -64,6 +64,7 @@ console.log(getCodelengthMin(nodeSet))
 // 满足 huffTree 的情况下，结点的个数的 Math.floor(logN+1) 就是最短编码值
 
 // 它这里所谓的编码长度，是所有编码个数的总和，并不是最大的编码位数
+// 要想求最短权值路径长度，我们必须在parent下挂一个num
 
 // 对于 任意树的实现我们都可以通过 2种方式
   // 1、直接建立结点联系
